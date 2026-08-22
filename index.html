@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>Mokuro</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <h1>Mokuro</h1>
+
+    <p>触れた作品を記録する目録</p>
+
+    
+
+   <div class="form">
+
+    <input
+        type="text"
+        id="title"
+        placeholder="作品名"
+        oninput="checkForm()">
+
+        <select id="category" onchange="checkForm()">
+            <option value="">分類を選択</option>
+            <option>漫画</option>
+            <option>書籍</option>
+            <option>アニメ</option>
+            <option>映画</option>
+            <option>ゲーム</option>
+            <option>音楽</option>
+            <option>その他</option>
+        </select>
+
+    
+
+    <input type="date" id="date">
+    
+
+    <textarea id="memo" placeholder="memo"></textarea>
+
+    <button id="addButton" onclick="addWork()" disabled>
+        追加
+    </button>
+
+</div>
+
+<div id="workList"></div>
+
+<script src="script.js"></script>
+</body>
+</html>
