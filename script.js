@@ -437,6 +437,11 @@ function closeSettings(){
         .classList.remove("open");
 
 }
+if ("serviceWorker" in navigator) {
+
+    navigator.serviceWorker.register("./service-worker.js");
+
+}
 
 
 
