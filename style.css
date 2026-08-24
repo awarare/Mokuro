@@ -175,7 +175,7 @@ select:focus {
     outline: none;
     box-shadow: 0 0 0 3px rgba(30,58,95,0.2);
 }
-tags {
+.tags {
     display: flex;
     gap: 8px;
     align-items: center;
@@ -365,6 +365,7 @@ body > p {
     background:#FBEAEA;
     color:#B42318;
 }
+
 /* PC側のスタイルは一切変更せず、768px以下の画面だけ上書き */
 @media screen and (max-width: 768px) {
 
@@ -373,14 +374,16 @@ body > p {
     padding-left: 12px !important;
     padding-right: 12px !important;
     max-width: 100% !important;
+    margin: 10px auto !important; /* 上下の無駄な余白を削る */
   }
 
-  /* 2. カードの横幅をしっかり使う */
-  .card, .form-card {
+  /* 2. カードとセクション（入力フォーム枠）の横幅をしっかり使う */
+  .card, .section {
     width: 100% !important;
     margin-left: 0 !important;
     margin-right: 0 !important;
-    padding: 16px !important; /* 内側の余白も適正化 */
+    padding: 16px !important; /* 内側の余白を適正化 */
+    box-sizing: border-box !important;
   }
 
   /* 3. ボタンや入力欄を指で押しやすくする */
@@ -394,8 +397,13 @@ body > p {
     font-size: 15px !important;
   }
 
-  /* 4. アクションボタン（編集・削除）も少し大きく */
-  .action-btn {
+  /* 追加ボタンを横いっぱいに広げる */
+  #addButton {
+    width: 100% !important;
+  }
+
+  /* 4. アクションボタン（編集・削除） */
+  .card-buttons button {
     padding: 8px 16px !important;
     font-size: 14px !important;
   }
