@@ -1,53 +1,189 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
     <meta charset="UTF-8">
     <title>Mokuro</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="favicon.ico">
+    <link rel="manifest" href="manifest.json">
 </head>
+
 
 <body>
 
+
+<header>
+
     <h1>Mokuro</h1>
 
-    <p>触れた作品を記録する目録</p>
+    <button id="settingButton" onclick="openSettings()">
+    ⚙
+</button>
 
-    
+</header>
 
-   <div class="form">
+
+<p>触れた作品を記録する目録</p>
+
+
+
+<!-- 検索・絞り込み -->
+
+<div class="section">
+
+    <h2>検索・絞り込み</h2>
+
+
+    <label for="search">検索</label>
+
+    <input
+        type="text"
+        id="search"
+        placeholder="作品名・メモを検索"
+        oninput="searchWorks()">
+
+
+
+    <label for="filterCategory">分類</label>
+
+    <select
+        id="filterCategory"
+        onchange="filterWorks()">
+
+        <option value="">すべて</option>
+        <option>漫画</option>
+        <option>書籍</option>
+        <option>アニメ</option>
+        <option>映画</option>
+        <option>ゲーム</option>
+        <option>音楽</option>
+        <option>その他</option>
+
+    </select>
+
+
+</div>
+
+
+
+
+<!-- 作品追加 -->
+
+<div class="section">
+
+
+    <h2>作品を追加</h2>
+
+
+    <label for="title">作品名</label>
 
     <input
         type="text"
         id="title"
-        placeholder="作品名"
         oninput="checkForm()">
 
-        <select id="category" onchange="checkForm()">
-            <option value="">分類を選択</option>
-            <option>漫画</option>
-            <option>書籍</option>
-            <option>アニメ</option>
-            <option>映画</option>
-            <option>ゲーム</option>
-            <option>音楽</option>
-            <option>その他</option>
-        </select>
 
-    
 
-    <input type="date" id="date">
-    
+    <label for="category">分類</label>
 
-    <textarea id="memo" placeholder="memo"></textarea>
+    <select
+        id="category"
+        onchange="checkForm()">
 
-    <button id="addButton" onclick="addWork()" disabled>
+        <option value="">分類を選択</option>
+        <option>漫画</option>
+        <option>書籍</option>
+        <option>アニメ</option>
+        <option>映画</option>
+        <option>ゲーム</option>
+        <option>音楽</option>
+        <option>その他</option>
+
+    </select>
+
+
+
+
+    <label for="status">状態</label>
+
+    <select id="status">
+
+        <option value="">未選択</option>
+        <option>未開始</option>
+        <option>プレイ中</option>
+        <option>視聴中</option>
+        <option>読書中</option>
+        <option>クリア済み</option>
+        <option>視聴済み</option>
+        <option>読了</option>
+
+    </select>
+
+
+
+
+    <label for="date">日付</label>
+
+    <input
+        type="date"
+        id="date">
+
+
+
+
+    <label for="memo">メモ</label>
+
+    <textarea
+        id="memo"></textarea>
+
+        
+
+
+
+
+    <button
+        id="addButton"
+        onclick="addWork()"
+        disabled>
+
         追加
+
+    </button>
+
+
+</div>
+
+
+
+
+<!-- 一覧 -->
+
+<!-- 一覧 -->
+<div id="workList"></div>
+
+<div id="overlay" onclick="closeSettings()"></div>
+
+<div id="settingsSheet">
+
+    <div class="sheet-handle"></div>
+
+    <h2>設定</h2>
+
+    <button onclick="exportWorks()">
+        データを書き出す
+    </button>
+
+    <button onclick="closeSettings()">
+        閉じる
     </button>
 
 </div>
 
-<div id="workList"></div>
-
 <script src="script.js"></script>
+
+
+
 </body>
+
 </html>

@@ -1,7 +1,8 @@
 let works = JSON.parse(localStorage.getItem("works")) || [];
-let editIndex = null;
+let editId = null;
 
 
+// 追加ボタン制御
 function checkForm() {
 
     const title = document.getElementById("title").value;
@@ -16,71 +17,129 @@ function checkForm() {
 }
 
 
+// 追加・編集
 function addWork() {
 
     const title = document.getElementById("title").value;
     const category = document.getElementById("category").value;
     const date = document.getElementById("date").value;
     const memo = document.getElementById("memo").value;
+    const status = document.getElementById("status").value;
+
 
     const work = {
+        id: editId ?? Date.now(),
         title: title,
         category: category,
+        status: status,
         date: date,
         memo: memo
     };
 
-    if (editIndex === null) {
 
-    works.push(work);
+    if (editId === null) {
 
-} else {
+        works.push(work);
 
-    works[editIndex] = work;
+    } else {
 
-    editIndex = null;
+        const index = works.findIndex(function(item) {
+            return item.id === editId;
+        });
 
-}
+        works[index] = work;
+        editId = null;
 
-    localStorage.setItem("works", JSON.stringify(works));
+    }
+
+
+    saveWorks();
 
     displayWorks();
+
 
     document.getElementById("title").value = "";
     document.getElementById("category").value = "";
     document.getElementById("date").value = "";
     document.getElementById("memo").value = "";
+    document.getElementById("status").value = "";
+
 
     checkForm();
 
 }
 
 
+// 保存
+function saveWorks() {
 
-function displayWorks() {
+    localStorage.setItem(
+        "works",
+        JSON.stringify(works)
+    );
+
+}
+
+
+// 表示
+// 表示
+// 表示
+function displayWorks(list = works) {
 
     const workList = document.getElementById("workList");
 
     workList.innerHTML = "";
 
-    works.forEach(function(work, index) {
+    // データが0件のとき
+    if (list.length === 0) {
+
+        workList.innerHTML = `
+            <div class="empty">
+                <div class="empty-icon">📖</div>
+                <p>
+
+まだ記録がありません
+
+触れた作品を追加すると、
+ここに目録が並びます</p>
+            </div>
+        `;
+
+        return;
+    }
+
+    list.forEach(function(work) {
+
+        const statusTag = work.status
+    ? `<span class="status-tag">${work.status}</span>`
+    : "";
 
         const card = `
-        <div class="card">
-            <h2>${work.title}</h2>
-            <p>${work.category}</p>
-            <p>${work.date}</p>
-            <p>${work.memo}</p>
+<div class="card">
 
-            <button onclick="editWork(${index})">
-    編集
-</button>
+    <h2>${work.title}</h2>
 
-<button onclick="deleteWork(${index})">
-    削除
-</button>
-        </div>
-        `;
+    <div class="tags">
+        <span class="category-tag">${work.category}</span>
+        ${statusTag}
+    </div>
+
+    <p>${work.date || ""}</p>
+
+    <p class="memo">${work.memo || ""}</p>
+
+    <div class="card-buttons">
+        <button onclick="editWork(${work.id})">
+            編集
+        </button>
+
+        <button onclick="deleteWork(${work.id})">
+            削除
+        </button>
+    </div>
+
+</div>
+`;
 
         workList.innerHTML += card;
 
@@ -89,39 +148,151 @@ function displayWorks() {
 }
 
 
-function deleteWork(index) {
+// 削除
+function deleteWork(id) {
 
-    works.splice(index, 1);
+    works = works.filter(function(work) {
 
-    localStorage.setItem("works", JSON.stringify(works));
+        return work.id !== id;
+
+    });
+
+
+    saveWorks();
 
     displayWorks();
 
 }
 
 
-function editWork(index) {
+// 編集
+function editWork(id) {
 
-    const work = works[index];
+    const work = works.find(function(work) {
+
+        return work.id === id;
+
+    });
+
 
     document.getElementById("title").value = work.title;
     document.getElementById("category").value = work.category;
+    document.getElementById("status").value = work.status || "";
     document.getElementById("date").value = work.date;
     document.getElementById("memo").value = work.memo;
+
+
+    editId = id;
+
+    checkForm();
 
 }
 
 
+// 検索
+function searchWorks() {
+
+    const keyword =
+    document.getElementById("search")
+    .value
+    .toLowerCase();
+
+
+    const filteredWorks = works.filter(function(work) {
+
+        return (
+            work.title.toLowerCase().includes(keyword) ||
+            work.category.toLowerCase().includes(keyword) ||
+            (work.memo || "").toLowerCase().includes(keyword)
+        );
+
+    });
+
+
+    displayWorks(filteredWorks);
+
+}
+
+
+// カテゴリー絞り込み
+function filterWorks() {
+
+    const category =
+    document.getElementById("filterCategory").value;
+
+
+    const filteredWorks = works.filter(function(work) {
+
+        if(category === "") {
+            return true;
+        }
+
+        return work.category === category;
+
+    });
+
+
+    displayWorks(filteredWorks);
+
+}
+
+
+// JSON書き出し
+function exportWorks() {
+
+    const data = JSON.stringify(works, null, 2);
+
+    const blob = new Blob(
+        [data],
+        {type:"application/json"}
+    );
+
+
+    const url = URL.createObjectURL(blob);
+
+
+    const a = document.createElement("a");
+
+    a.href = url;
+    a.download = "mokuro-backup.json";
+
+    a.click();
+
+
+    URL.revokeObjectURL(url);
+
+}
+
+//設定
+// 設定シート
+
+function openSettings(){
+
+    document
+        .getElementById("overlay")
+        .style.display = "block";
+
+    document
+        .getElementById("settingsSheet")
+        .classList.add("open");
+
+}
+
+
+function closeSettings(){
+
+    document
+        .getElementById("overlay")
+        .style.display = "none";
+
+    document
+        .getElementById("settingsSheet")
+        .classList.remove("open");
+
+}
+
+
+
+
+// 起動時表示
 displayWorks();
-function editWork(index) {
-
-    const work = works[index];
-
-    document.getElementById("title").value = work.title;
-    document.getElementById("category").value = work.category;
-    document.getElementById("date").value = work.date;
-    document.getElementById("memo").value = work.memo;
-
-    editIndex = index;
-
-}
