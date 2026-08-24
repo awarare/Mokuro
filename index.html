@@ -98,6 +98,7 @@
         <option>映画</option>
         <option>ゲーム</option>
         <option>音楽</option>
+        <option>成人向け</option>
         <option>その他</option>
 
     </select>
@@ -173,6 +174,16 @@
     <button onclick="exportWorks()">
         データを書き出す
     </button>
+    <button onclick="importWorks()">
+    データを読み込む
+</button>
+
+<input
+    type="file"
+    id="importFile"
+    accept=".json"
+    style="display:none"
+    onchange="loadWorks(event)">
 
     <button onclick="closeSettings()">
         閉じる

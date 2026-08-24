@@ -260,6 +260,68 @@ function exportWorks() {
 
 
     URL.revokeObjectURL(url);
+    // JSON読み込みボタン
+function importWorks() {
+
+    document
+        .getElementById("importFile")
+        .click();
+
+}
+
+
+// JSON読み込み処理
+function loadWorks(event) {
+
+    const file = event.target.files[0];
+
+    if (!file) {
+        return;
+    }
+
+
+    const reader = new FileReader();
+
+
+    reader.onload = function(e) {
+
+        try {
+
+            const data = JSON.parse(e.target.result);
+
+
+            if (!Array.isArray(data)) {
+
+                alert("正しいデータではありません");
+
+                return;
+
+            }
+
+
+            works = data;
+
+
+            saveWorks();
+
+            displayWorks();
+
+
+            alert("データを読み込みました");
+
+
+        } catch(error) {
+
+            alert("読み込みに失敗しました");
+
+        }
+
+    };
+
+
+    reader.readAsText(file);
+
+}
 
 }
 
