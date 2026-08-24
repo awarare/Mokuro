@@ -365,3 +365,38 @@ body > p {
     background:#FBEAEA;
     color:#B42318;
 }
+/* PC側のスタイルは一切変更せず、768px以下の画面だけ上書き */
+@media screen and (max-width: 768px) {
+
+  /* 1. 外側の余白を削って画面幅いっぱいに広げる */
+  body, .container {
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+    max-width: 100% !important;
+  }
+
+  /* 2. カードの横幅をしっかり使う */
+  .card, .form-card {
+    width: 100% !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    padding: 16px !important; /* 内側の余白も適正化 */
+  }
+
+  /* 3. ボタンや入力欄を指で押しやすくする */
+  input, select, textarea {
+    font-size: 16px !important; /* iOSの勝手な拡大ズームを防止 */
+    width: 100% !important;
+  }
+
+  button, .btn {
+    min-height: 44px !important; /* 指で押しやすいタップ領域 */
+    font-size: 15px !important;
+  }
+
+  /* 4. アクションボタン（編集・削除）も少し大きく */
+  .action-btn {
+    padding: 8px 16px !important;
+    font-size: 14px !important;
+  }
+}

@@ -236,6 +236,93 @@ function filterWorks() {
 
 }
 
+// 並び替え
+function sortWorks() {
+
+    const sortType = document.getElementById("sort").value;
+
+    let sortedWorks = [...works];
+
+
+    if (sortType === "new") {
+
+        sortedWorks.sort(function(a,b){
+
+            return new Date(b.date) - new Date(a.date);
+
+        });
+
+    }
+
+
+    if (sortType === "old") {
+
+        sortedWorks.sort(function(a,b){
+
+            return new Date(a.date) - new Date(b.date);
+
+        });
+
+    }
+
+
+    if (sortType === "name") {
+
+        sortedWorks.sort(function(a,b){
+
+            return a.title.localeCompare(b.title);
+
+        });
+
+    }
+
+
+    displayWorks(sortedWorks);
+
+}// 並び替え
+function sortWorks() {
+
+    const sortType = document.getElementById("sort").value;
+
+    let sortedWorks = [...works];
+
+
+    if (sortType === "new") {
+
+        sortedWorks.sort(function(a,b){
+
+            return new Date(b.date) - new Date(a.date);
+
+        });
+
+    }
+
+
+    if (sortType === "old") {
+
+        sortedWorks.sort(function(a,b){
+
+            return new Date(a.date) - new Date(b.date);
+
+        });
+
+    }
+
+
+    if (sortType === "name") {
+
+        sortedWorks.sort(function(a,b){
+
+            return a.title.localeCompare(b.title);
+
+        });
+
+    }
+
+
+    displayWorks(sortedWorks);
+
+}
 
 // JSON書き出し
 function exportWorks() {
@@ -355,4 +442,4 @@ function closeSettings(){
 
 
 // 起動時表示
-displayWorks();
+sortWorks();
