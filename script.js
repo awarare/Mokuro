@@ -260,7 +260,9 @@ function exportWorks() {
 
 
     URL.revokeObjectURL(url);
-    // JSON読み込みボタン
+
+}
+ // JSON読み込みボタン
 function importWorks() {
 
     document
@@ -293,14 +295,12 @@ function loadWorks(event) {
             if (!Array.isArray(data)) {
 
                 alert("正しいデータではありません");
-
                 return;
 
             }
 
 
             works = data;
-
 
             saveWorks();
 
@@ -320,8 +320,6 @@ function loadWorks(event) {
 
 
     reader.readAsText(file);
-
-}
 
 }
 
