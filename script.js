@@ -33,9 +33,9 @@ async function addWork() {
 
     try {
 
-        await addDoc(collection(db, "works"), work);
+       const docRef = await addDoc(collection(db, "works"), work);
 
-        console.log("Firestore保存成功");
+console.log("Firestore保存成功 ID:", docRef.id);
 
 
         // 表示用のローカルデータにも追加
