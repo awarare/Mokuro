@@ -20,6 +20,7 @@ function checkForm() {
 // 追加
 async function addWork() {
 
+
     const work = {
 
         title: document.getElementById("title").value,
@@ -33,38 +34,83 @@ async function addWork() {
 
     try {
 
-        const docRef = await addDoc(
-            collection(db, "works"),
-            work
-        );
+
+        // 編集の場合
+        if(editId){
+
+            await updateDoc(
+                doc(db,"works",editId),
+                work
+            );
 
 
-        console.log(
-            "Firestore保存成功 ID:",
-            docRef.id
-        );
+            works = works.map(function(item){
+
+                if(item.id === editId){
+
+                    return {
+                        id: editId,
+                        ...work
+                    };
+
+                }
+
+                return item;
+
+            });
 
 
-        works.push({
-            id: docRef.id,
-            ...work
-        });
+            console.log("Firestore更新成功");
+
+
+            editId = null;
+
+            document.getElementById("addButton").textContent = "追加";
+
+
+        }
+
+
+        // 新規追加の場合
+        else{
+
+
+            const docRef = await addDoc(
+                collection(db,"works"),
+                work
+            );
+
+
+            works.push({
+
+                id:docRef.id,
+                ...work
+
+            });
+
+
+            console.log(
+                "Firestore保存成功 ID:",
+                docRef.id
+            );
+
+        }
 
 
         displayWorks();
 
 
-        document.getElementById("title").value = "";
-        document.getElementById("category").value = "";
-        document.getElementById("status").value = "";
-        document.getElementById("date").value = "";
-        document.getElementById("memo").value = "";
+        document.getElementById("title").value="";
+        document.getElementById("category").value="";
+        document.getElementById("status").value="";
+        document.getElementById("date").value="";
+        document.getElementById("memo").value="";
 
 
         checkForm();
 
 
-    } catch(error) {
+    }catch(error){
 
         console.error(
             "保存失敗",
@@ -75,6 +121,16 @@ async function addWork() {
 
 }
 
+works.sort(function(a,b){
+
+    if(!a.date) return 1;
+    if(!b.date) return -1;
+
+    return new Date(b.date)-new Date(a.date);
+
+});
+
+displayWorks();
 
 
 // 表示
@@ -357,14 +413,16 @@ function editWork(id){
     work.memo || "";
 
 
-    editId=id;
+    editId = id;
+
+document.getElementById("addButton").textContent = "更新";
 
 
 }
 
 
 
-// 削除（あとでFirebase対応）
+// 削除
 async function deleteWork(id){
 
     try{
@@ -537,8 +595,8 @@ collection,
 addDoc,
 getDocs,
 deleteDoc,
-doc
-
+doc,
+updateDoc
 }
 from
 "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
