@@ -20,7 +20,8 @@ function checkForm() {
 // 追加・編集
 async function addWork() {
 
-    
+     //テスト用
+        console.log("addWork最新版");
 
     const work = {
         title: title,
@@ -28,6 +29,10 @@ async function addWork() {
         status: status,
         date: date,
         memo: memo
+
+       
+
+
     };
 
 
