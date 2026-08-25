@@ -426,7 +426,7 @@ if ("serviceWorker" in navigator) {
 }
 
 
-// Firebase読み込みテスト
+// Firebase読み込み
 
 import { initializeApp } 
 from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
@@ -438,6 +438,7 @@ import {
     getDocs
 } 
 from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
+
 
 const firebaseConfig = {
     apiKey: "AIzaSyAF7uBhSvDVkuW-7loDhtiOSLZ2ug5bl_c",
@@ -456,56 +457,34 @@ const db = getFirestore(app);
 
 console.log("Firebase接続OK");
 
-async function loadFirebaseWorks() {
-
-    try {
-
-        const snapshot = await getDocs(
-            collection(db, "works")
-        );
 
 
-        works = [];
+async function loadFirebaseWorks(){
+
+    const snapshot = await getDocs(
+        collection(db, "works")
+    );
 
 
-        snapshot.forEach(function(doc) {
+    works = [];
 
-            works.push({
-                id: doc.id,
-                ...doc.data()
-            });
 
+    snapshot.forEach(function(doc){
+
+        works.push({
+            id: doc.id,
+            ...doc.data()
         });
 
-
-       
-
-
-        console.log("Firestore読み込み成功");
+    });
 
 
-    } catch(error) {
+    console.log("Firestore読み込み完了", works);
 
-        console.error(
-            "Firestore読み込み失敗",
-            error
-        );
 
-    }
+    displayWorks();
 
 }
 
-window.checkForm = checkForm;
-window.addWork = addWork;
-window.searchWorks = searchWorks;
-window.filterWorks = filterWorks;
-window.sortWorks = sortWorks;
-window.editWork = editWork;
-window.deleteWork = deleteWork;
-window.exportWorks = exportWorks;
-window.importWorks = importWorks;
-window.loadWorks = loadWorks;
-window.openSettings = openSettings;
-window.closeSettings = closeSettings;
 
 loadFirebaseWorks();
