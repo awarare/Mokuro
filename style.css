@@ -395,8 +395,19 @@ body {
     #date {
         outline: 3px solid blue;
     }
+    
 
 }
-body {
-    background: hotpink !important;
+#date {
+    outline: 5px solid red !important;
+}
+.date-wrapper{
+    width:100%;
+    overflow:hidden;
+}
+
+.date-wrapper input[type="date"]{
+    width:100%;
+    display:block;
+    box-sizing:border-box;
 }
