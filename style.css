@@ -385,21 +385,10 @@ body {
     }
 }
 
-/*デバッグ用*/
-@media screen and (max-width:768px){
-
-    .section {
-        outline: 3px solid red;
-    }
-
-    #date {
-        outline: 3px solid blue;
-    }
-    
-
-}
-#date {
-    outline: 5px solid red !important;
+input[type="date"] {
+    height: 48px;
+    padding-top: 12px;
+    padding-bottom: 12px;
 }
 .date-wrapper{
     width:100%;
