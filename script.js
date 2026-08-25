@@ -446,9 +446,31 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 
 const db = getFirestore(app);
+async function migrateLocalWorks(){
+
+    const localWorks = JSON.parse(localStorage.getItem("works")) || [];
+
+    console.log("移行対象", localWorks);
+
+    for (const work of localWorks){
+
+        await addDoc(collection(db, "works"), {
+            title: work.title,
+            category: work.category,
+            status: work.status || "",
+            date: work.date || "",
+            memo: work.memo || ""
+        });
+
+    }
+
+    console.log("移行完了");
+}
+
+window.migrateLocalWorks = migrateLocalWorks;
 
 
-console.log("Firebase接続OK");
+console.log("Firebase接続OK ver2");
 
 
 
@@ -491,3 +513,5 @@ window.importWorks = importWorks;
 window.loadWorks = loadWorks;
 window.openSettings = openSettings;
 window.closeSettings = closeSettings;
+
+
