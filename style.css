@@ -425,3 +425,34 @@ body > p {
     font-size: 14px !important;
   }
 }
+@media screen and (max-width: 768px) {
+
+    * {
+        box-sizing: border-box;
+        max-width: 100%;
+    }
+
+    html,
+    body {
+        width: 100%;
+        overflow-x: hidden;
+    }
+
+    .section {
+        width: 100%;
+        max-width: 100%;
+        overflow: hidden;
+    }
+
+    .section input[type="date"] {
+        width: 100%;
+        max-width: 100%;
+        display: block;
+        box-sizing: border-box;
+    }
+
+}
+input[type="date"] {
+    min-width: 0 !important;
+    flex: 1;
+}
