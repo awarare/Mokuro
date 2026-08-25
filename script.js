@@ -168,9 +168,7 @@ function displayWorks(list = works) {
 // Firebase読み込み
 async function loadFirebaseWorks(){
 
-
-    const snapshot =
-    await getDocs(
+    const snapshot = await getDocs(
         collection(db,"works")
     );
 
@@ -180,17 +178,33 @@ async function loadFirebaseWorks(){
 
     snapshot.forEach(function(doc){
 
-
         works.push({
-
             id: doc.id,
             ...doc.data()
-
         });
-
 
     });
 
+
+    // 初期表示は必ず新しい順
+    works.sort(function(a,b){
+
+        if(!a.date && !b.date){
+            return 0;
+        }
+
+        if(!a.date){
+            return 1;
+        }
+
+        if(!b.date){
+            return -1;
+        }
+
+
+        return new Date(b.date) - new Date(a.date);
+
+    });
 
 
     console.log(
@@ -200,7 +214,6 @@ async function loadFirebaseWorks(){
 
 
     displayWorks();
-
 
 }
 
@@ -252,16 +265,21 @@ function sortWorks(){
     document.getElementById("sort").value;
 
 
-    let sorted =
-    [...works];
+    let sorted = [...works];
 
 
-    if(type==="new"){
+    if(type === "new"){
 
-        sorted.sort((a,b)=>{
+        sorted.sort(function(a,b){
 
-            if(!a.date) return 1;
-            if(!b.date) return -1;
+            if(!a.date){
+                return 1;
+            }
+
+            if(!b.date){
+                return -1;
+            }
+
 
             return new Date(b.date)
             -
@@ -272,9 +290,18 @@ function sortWorks(){
     }
 
 
-    if(type==="old"){
+    if(type === "old"){
 
-        sorted.sort((a,b)=>{
+        sorted.sort(function(a,b){
+
+            if(!a.date){
+                return 1;
+            }
+
+            if(!b.date){
+                return -1;
+            }
+
 
             return new Date(a.date)
             -
@@ -285,11 +312,16 @@ function sortWorks(){
     }
 
 
-    if(type==="name"){
+    if(type === "name"){
 
-        sorted.sort((a,b)=>
-        a.title.localeCompare(b.title)
-        );
+        sorted.sort(function(a,b){
+
+            return a.title.localeCompare(
+                b.title,
+                "ja"
+            );
+
+        });
 
     }
 
@@ -333,19 +365,135 @@ function editWork(id){
 
 
 // 削除（あとでFirebase対応）
-function deleteWork(id){
+async function deleteWork(id){
 
-    works =
-    works.filter(
-        w=>w.id!==id
+    try{
+
+        await deleteDoc(
+            doc(db,"works",id)
+        );
+
+
+        works =
+        works.filter(
+            w=>w.id!==id
+        );
+
+
+        displayWorks();
+
+
+        console.log("削除成功");
+
+
+    }catch(error){
+
+        console.error(
+            "削除失敗",
+            error
+        );
+
+    }
+
+}
+
+// JSON書き出し
+function exportWorks(){
+
+    const data = JSON.stringify(works, null, 2);
+
+
+    const blob = new Blob(
+        [data],
+        {
+            type:"application/json"
+        }
     );
 
 
-    displayWorks();
+    const url = URL.createObjectURL(blob);
+
+
+    const a = document.createElement("a");
+
+    a.href = url;
+
+    a.download = "mokuro-backup.json";
+
+    a.click();
+
+
+    URL.revokeObjectURL(url);
 
 }
 
 
+
+// JSON読み込みボタン
+function importWorks(){
+
+    document
+    .getElementById("importFile")
+    .click();
+
+}
+
+
+
+// JSON読み込み
+function loadWorks(event){
+
+    const file =
+    event.target.files[0];
+
+
+    if(!file){
+        return;
+    }
+
+
+    const reader =
+    new FileReader();
+
+
+    reader.onload=function(e){
+
+        try{
+
+            const data =
+            JSON.parse(e.target.result);
+
+
+            if(!Array.isArray(data)){
+
+                alert("正しいデータではありません");
+
+                return;
+
+            }
+
+
+            works=data;
+
+
+            displayWorks();
+
+
+            alert("データを読み込みました");
+
+
+        }catch(error){
+
+            alert("読み込み失敗");
+
+        }
+
+    };
+
+
+    reader.readAsText(file);
+
+}
 
 // 設定
 function openSettings(){
@@ -387,7 +535,9 @@ import {
 getFirestore,
 collection,
 addDoc,
-getDocs
+getDocs,
+deleteDoc,
+doc
 
 }
 from
@@ -430,11 +580,15 @@ loadFirebaseWorks();
 
 
 
-window.checkForm=checkForm;
-window.addWork=addWork;
-window.editWork=editWork;
-window.deleteWork=deleteWork;
-window.searchWorks=searchWorks;
-window.sortWorks=sortWorks;
-window.openSettings=openSettings;
-window.closeSettings=closeSettings;
+window.checkForm = checkForm;
+window.addWork = addWork;
+window.editWork = editWork;
+window.deleteWork = deleteWork;
+window.searchWorks = searchWorks;
+window.sortWorks = sortWorks;
+window.openSettings = openSettings;
+window.closeSettings = closeSettings;
+
+window.exportWorks = exportWorks;
+window.importWorks = importWorks;
+window.loadWorks = loadWorks;
