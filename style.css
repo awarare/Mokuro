@@ -456,3 +456,22 @@ input[type="date"] {
     min-width: 0 !important;
     flex: 1;
 }
+@media screen and (max-width: 768px) {
+
+    .section {
+        width: 100%;
+        overflow: hidden;
+    }
+
+    .section input[type="date"] {
+        display: block;
+        width: 100% !important;
+        max-width: 100% !important;
+        min-width: 0 !important;
+        height: 48px;
+        box-sizing: border-box !important;
+        padding: 12px !important;
+        margin: 0 !important;
+    }
+
+}
