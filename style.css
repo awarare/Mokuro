@@ -337,14 +337,18 @@ body > p {
         box-sizing: border-box !important;
     }
 
-    html, body {
-        width: 100% !important;
-        max-width: 100% !important;
-        padding-left: 12px !important;
-        padding-right: 12px !important;
-        margin: 10px auto !important;
-        overflow-x: hidden !important;
-    }
+    html {
+    width: 100%;
+    overflow-x: hidden;
+}
+
+body {
+    width: auto;
+    max-width: 600px;
+    margin: 10px auto;
+    padding: 12px;
+    overflow-x: hidden;
+}
 
     .card, .section {
         width: 100% !important;
@@ -379,4 +383,17 @@ body > p {
         padding: 8px 16px !important;
         font-size: 14px !important;
     }
+}
+
+/*デバッグ用*/
+@media screen and (max-width:768px){
+
+    .section {
+        outline: 3px solid red;
+    }
+
+    #date {
+        outline: 3px solid blue;
+    }
+
 }
