@@ -20,12 +20,7 @@ function checkForm() {
 // 追加・編集
 async function addWork() {
 
-    const title = document.getElementById("title").value;
-    const category = document.getElementById("category").value;
-    const date = document.getElementById("date").value;
-    const memo = document.getElementById("memo").value;
-    const status = document.getElementById("status").value;
-
+    
 
     const work = {
         title: title,

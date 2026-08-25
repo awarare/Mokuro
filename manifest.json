@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {
   "name": "Mokuro",
   "short_name": "Mokuro",
@@ -12,4 +13,20 @@
       "type": "image/x-icon"
     }
   ]
+=======
+{
+  "name": "Mokuro",
+  "short_name": "Mokuro",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#F5F6FA",
+  "theme_color": "#1E3A5F",
+  "icons": [
+    {
+      "src": "favicon.ico",
+      "sizes": "192x192",
+      "type": "image/x-icon"
+    }
+  ]
+>>>>>>> 2ad67ea (update css)
 }
