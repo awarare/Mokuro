@@ -373,9 +373,14 @@ body > p {
   /* すべての入力欄を確実にカード内に収める */
   .section input,
   input[type="date"] {
+    display: block;
     width: 100% !important;
     max-width: 100% !important;
+    min-width: 0 !important;
     box-sizing: border-box !important;
+    appearance: none;
+    -webkit-appearance: none;
+}
   }
 
   /* 1. 外側の余白を削って画面幅いっぱいに広げる */
@@ -393,6 +398,7 @@ body > p {
     margin-right: 0 !important;
     padding: 16px !important; /* 内側の余白を適正化 */
     box-sizing: border-box !important;
+    overflow: hidden;
   }
 
   /* 3. ボタンや入力欄を指で押しやすくする */
