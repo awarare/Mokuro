@@ -475,3 +475,14 @@ input[type="date"] {
     }
 
 }
+@media screen and (max-width:768px){
+
+    body {
+        width:100%;
+        max-width:100%;
+        padding:12px;
+        margin:10px auto;
+        overflow-x:hidden;
+    }
+
+}
