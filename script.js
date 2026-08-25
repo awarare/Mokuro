@@ -20,8 +20,12 @@ function checkForm() {
 // 追加・編集
 async function addWork() {
 
-     //テスト用
-        console.log("addWork最新版");
+    const title = document.getElementById("title").value;
+    const category = document.getElementById("category").value;
+    const date = document.getElementById("date").value;
+    const memo = document.getElementById("memo").value;
+    const status = document.getElementById("status").value;
+
 
     const work = {
         title: title,
@@ -29,23 +33,21 @@ async function addWork() {
         status: status,
         date: date,
         memo: memo
-
-       
-
-
     };
 
 
     try {
 
-       const docRef = await addDoc(collection(db, "works"), work);
+        const docRef = await addDoc(
+            collection(db, "works"),
+            work
+        );
 
-console.log("Firestore保存成功 ID:", docRef.id);
+        console.log("Firestore保存成功 ID:", docRef.id);
 
 
-        // 表示用のローカルデータにも追加
         works.push({
-            id: Date.now(),
+            id: docRef.id,
             ...work
         });
 
@@ -66,12 +68,12 @@ console.log("Firestore保存成功 ID:", docRef.id);
     } catch(error) {
 
         console.error("保存失敗", error);
+
         alert("保存に失敗しました");
 
     }
 
 }
-
        
        
 
