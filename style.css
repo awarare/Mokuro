@@ -331,24 +331,16 @@ body > p {
 /* ==========================================
    スマホ・タブレット向けレスポンシブ設定 (768px以下)
    ========================================== */
-@media screen and (max-width: 768px) {
-
-    * {
-        box-sizing: border-box !important;
+@media screen and (max-width:768px){
+    body {
+        margin:10px auto;
+        padding:12px;
+        width:100%;
+        box-sizing:border-box;
     }
 
-    html {
-    width: 100%;
-    overflow-x: hidden;
-}
 
-body {
-    width: auto;
-    max-width: 600px;
-    margin: 10px auto;
-    padding: 12px;
-    overflow-x: hidden;
-}
+
 
     .card, .section {
         width: 100% !important;
@@ -399,4 +391,17 @@ input[type="date"] {
     width:100%;
     display:block;
     box-sizing:border-box;
+}
+.section {
+    overflow: hidden !important;
+}
+
+#date {
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+}
+input[type="date"] {
+ border:3px solid red;
 }
