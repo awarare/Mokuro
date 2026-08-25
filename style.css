@@ -380,8 +380,10 @@ body > p {
     box-sizing: border-box !important;
     appearance: none;
     -webkit-appearance: none;
-}
   }
+  .section * {
+    max-width: 100%;
+}
 
   /* 1. 外側の余白を削って画面幅いっぱいに広げる */
   body, .container {
