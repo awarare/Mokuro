@@ -1,4 +1,4 @@
-let works = JSON.parse(localStorage.getItem("works")) || [];
+let works = [];
 let editId = null;
 
 
@@ -73,14 +73,12 @@ async function addWork() {
 }
 
        
-        editId = null;
+       
 
     
 
 
-    saveWorks();
-
-    displayWorks();
+    
 
 
     document.getElementById("title").value = "";
@@ -465,9 +463,7 @@ async function loadFirebaseWorks(){
         collection(db, "works")
     );
 
-
     works = [];
-
 
     snapshot.forEach(function(doc){
 
@@ -478,9 +474,7 @@ async function loadFirebaseWorks(){
 
     });
 
-
     console.log("Firestore読み込み完了", works);
-
 
     displayWorks();
 
@@ -488,3 +482,17 @@ async function loadFirebaseWorks(){
 
 
 loadFirebaseWorks();
+
+window.checkForm = checkForm;
+window.addWork = addWork;
+window.displayWorks = displayWorks;
+window.searchWorks = searchWorks;
+window.filterWorks = filterWorks;
+window.sortWorks = sortWorks;
+window.editWork = editWork;
+window.deleteWork = deleteWork;
+window.exportWorks = exportWorks;
+window.importWorks = importWorks;
+window.loadWorks = loadWorks;
+window.openSettings = openSettings;
+window.closeSettings = closeSettings;

@@ -368,6 +368,15 @@ body > p {
 
 /* PC側のスタイルは一切変更せず、768px以下の画面だけ上書き */
 @media screen and (max-width: 768px) {
+  /* ...他の設定... */
+
+  /* すべての入力欄を確実にカード内に収める */
+  .section input,
+  input[type="date"] {
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
 
   /* 1. 外側の余白を削って画面幅いっぱいに広げる */
   body, .container {
