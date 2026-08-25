@@ -83,14 +83,8 @@ async function addWork() {
     
 
 
-    document.getElementById("title").value = "";
-    document.getElementById("category").value = "";
-    document.getElementById("date").value = "";
-    document.getElementById("memo").value = "";
-    document.getElementById("status").value = "";
+    
 
-
-    checkForm();
 
 
 
@@ -492,9 +486,9 @@ async function loadFirebaseWorks(){
     snapshot.forEach(function(doc){
 
         works.push({
-            id: doc.id,
-            ...doc.data()
-        });
+    id: docRef.id,
+    ...work
+});
 
     });
 
