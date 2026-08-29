@@ -721,3 +721,6 @@ window.importWorks = importWorks;
 window.loadWorks = loadWorks;
 window.toggleAddForm = toggleAddForm;
 window.toggleSearchForm = toggleSearchForm;
+
+lucide.createIcons();
+lucide.createIcons();

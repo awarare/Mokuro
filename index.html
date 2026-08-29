@@ -12,6 +12,7 @@
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#1E3A5F">
     <link rel="icon" href="favicon.png">
+    <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 
 
@@ -23,7 +24,7 @@
     <h1>Mokuro</h1>
 
     <button id="settingButton" onclick="openSettings()">
-    ⚙
+    <i data-lucide="settings"></i>
 </button>
 
 </header>
@@ -78,8 +79,8 @@
     <option value="name">作品名順</option>
     </select>
 
-<!--<button onclick="searchWorks()">
-    🔍
+<!--<button id="searchButton" onclick="toggleSearchForm()">
+    <i data-lucide="funnel"></i>
 </button>-->
 
     </div>
@@ -95,8 +96,9 @@
 <!-- 作品追加 -->
 
 
-<button id="fab" onclick="toggleAddForm()">＋</button>
-
+<button id="fab" onclick="toggleAddForm()">
+    <i data-lucide="plus"></i>
+</button>
 <div class="section" id="addForm">
 
 

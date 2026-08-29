@@ -128,14 +128,21 @@ header h1 {
 }
 
 #settingButton {
-    position: absolute;
-    right: 0;
-    top: 50%;
-    transform: translateY(-50%);
-    background: transparent;
-    color: #1E3A5F;
-    padding: 8px;
-    font-size: 24px;
+    position:absolute;
+    right:0;
+    top:50%;
+    transform:translateY(-50%);
+
+    background:transparent;
+    color:#1E3A5F;
+
+    width:44px;
+    height:44px;
+    padding:0;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
 }
 
 .card:hover {
@@ -507,4 +514,28 @@ input[type="date"] {
     display:flex;
     flex-direction:column;
     align-items:center;
+}
+#settingButton,
+#searchButton,
+#executeSearchButton {
+    width:44px;
+    height:44px;
+    padding:0;
+    border-radius:50%;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+#settingButton svg,
+#searchButton svg,
+#executeSearchButton svg {
+    width:24px;
+    height:24px;
+}
+#fab svg {
+    width:32px;
+    height:32px;
+    stroke-width:2.5;
 }
