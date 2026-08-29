@@ -493,3 +493,18 @@ input[type="date"] {
     padding:0;
     margin-bottom: 20px;
 }
+#executeSearchButton {
+    width:44px !important;
+    height:44px !important;
+    padding:0 !important;
+    margin:12px auto !important;
+
+    display:flex !important;
+    align-items:center;
+    justify-content:center;
+}
+#searchForm {
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+}

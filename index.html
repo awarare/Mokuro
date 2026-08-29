@@ -45,18 +45,19 @@
     <label for="search">検索</label>
 
     <input
-        type="text"
-        id="search"
-        placeholder="作品名・メモを検索"
-        oninput="searchWorks()">
+    type="text"
+    id="search"
+    placeholder="作品名・メモを検索"
+    oninput="updateList()">
+
 
 
 
     <label for="filterCategory">分類</label>
 
     <select
-        id="filterCategory"
-        onchange="filterWorks()">
+    id="filterCategory"
+    onchange="updateList()">
 
         <option value="">すべて</option>
         <option>漫画</option>
@@ -69,24 +70,23 @@
         <option>その他</option>
 
     </select>
-<label for="sort">並び替え</label>
+    <label for="sort">並び替え</label>
 
-<select id="sort" onchange="sortWorks()">
+    <select id="sort" onchange="sortWorks()">
     <option value="new">新しい順</option>
     <option value="old">古い順</option>
     <option value="name">作品名順</option>
-</select>
+    </select>
 
-</div>
+<!--<button onclick="searchWorks()">
+    🔍
+</button>-->
+
+    </div>
 
 
 
-     <button 
-        id="cancelButton" 
-        onclick="cancelEdit()" 
-        style="display:none;">
-        キャンセル
-     </button>
+    
 
     </div>
 </div>
@@ -221,9 +221,11 @@
 
     </svg>
 </button>
+
 </div>
 
 <div id="workList"></div>
+
 
 
 

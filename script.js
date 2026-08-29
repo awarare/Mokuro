@@ -304,8 +304,36 @@ function searchWorks(){
     displayWorks(result);
 
 }
+//絞り込み関数
+function updateList(){
+
+    const keyword =
+    document.getElementById("search").value.toLowerCase();
+
+    const category =
+    document.getElementById("filterCategory").value;
 
 
+    const result = works.filter(function(work){
+
+        const matchKeyword =
+        work.title.toLowerCase().includes(keyword) ||
+        (work.memo || "").toLowerCase().includes(keyword);
+
+
+        const matchCategory =
+        category === "" ||
+        work.category === category;
+
+
+        return matchKeyword && matchCategory;
+
+    });
+
+
+    displayWorks(result);
+
+}
 
 // 並び替え
 function sortWorks(){
@@ -381,30 +409,24 @@ function sortWorks(){
 
 
 
-// 編集
+//編集
 function editWork(id){
 
-    const work =
-    works.find(
-        w=>w.id===id
+    console.log("編集開始", id);
+
+    const work = works.find(
+        w => w.id === id
     );
 
+    if(!work){
+        return;
+    }
 
-    document.getElementById("title").value =
-    work.title;
-
-    document.getElementById("category").value =
-    work.category;
-
-    document.getElementById("status").value =
-    work.status || "";
-
-    document.getElementById("date").value =
-    work.date || "";
-
-    document.getElementById("memo").value =
-    work.memo || "";
-
+    document.getElementById("title").value = work.title;
+    document.getElementById("category").value = work.category;
+    document.getElementById("status").value = work.status || "";
+    document.getElementById("date").value = work.date || "";
+    document.getElementById("memo").value = work.memo || "";
 
     editId = id;
 
@@ -412,10 +434,19 @@ function editWork(id){
 
     document.getElementById("cancelButton").style.display = "inline-block";
 
-    checkForm();
-    document.querySelector(".section h2").textContent = "作品を編集";
+    document.querySelector("#addForm h2").textContent = "作品を編集";
 
+    // ★編集フォームを開く
+    document.getElementById("addForm").classList.add("open");
+
+    checkForm();
+    document.getElementById("addForm").scrollIntoView({
+    behavior:"smooth"
+    
+});
 }
+
+
 
 //キャンセル
 function cancelEdit(){
@@ -431,6 +462,8 @@ function cancelEdit(){
     document.getElementById("addButton").textContent = "追加";
 
     document.getElementById("cancelButton").style.display = "none";
+    document.getElementById("addForm").classList.remove("open");
+    document.querySelector("#addForm h2").textContent = "作品を追加";
 
     checkForm();
 
@@ -679,8 +712,7 @@ window.checkForm = checkForm;
 window.addWork = addWork;
 window.editWork = editWork;
 window.deleteWork = deleteWork;
-window.searchWorks = searchWorks;
-window.sortWorks = sortWorks;
+window.updateList = updateList;
 window.openSettings = openSettings;
 window.closeSettings = closeSettings;
 
