@@ -10,7 +10,8 @@
     <link rel="stylesheet" href="style.css?v=2">
     <link rel="icon" href="favicon.ico">
     <link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#1E3A5F">
+    <meta name="theme-color" content="#1E3A5F">
+    <link rel="icon" href="favicon.png">
 </head>
 
 
@@ -34,7 +35,9 @@
 
 <!-- 検索・絞り込み -->
 
-<div class="section">
+
+
+<div class="section" id="searchForm">
 
     <h2>検索・絞り込み</h2>
 
@@ -78,10 +81,28 @@
 
 
 
+     <button 
+        id="cancelButton" 
+        onclick="cancelEdit()" 
+        style="display:none;">
+        キャンセル
+     </button>
+
+    </div>
+</div>
+
 
 <!-- 作品追加 -->
 
-<div class="section">
+
+<button id="fab" onclick="toggleAddForm()">＋</button>
+
+<div class="section" id="addForm">
+
+
+
+
+
 
 
     <h2>作品を追加</h2>
@@ -154,17 +175,24 @@
 
 
 
+<!--追加キャンセルボタン-->
+    <div class="form-buttons">
 
-    <button
-        id="addButton"
-        onclick="addWork()"
+        <button 
+        id="addButton" 
+        onclick="addWork()" 
         disabled>
-
         追加
+     </button>
 
-    </button>
+     <button 
+        id="cancelButton" 
+        onclick="cancelEdit()" 
+        style="display:none;">
+        キャンセル
+     </button>
 
-
+</div>
 </div>
 
 
@@ -173,7 +201,33 @@
 
 
 <!-- 一覧 -->
+<div class="list-header">
+
+    <h2>作品一覧</h2>
+
+    <!--検索欄を開くボタン-->
+<button id="searchButton" onclick="toggleSearchForm()">
+    <svg 
+        width="24" 
+        height="24" 
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round">
+
+        <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/>
+
+    </svg>
+</button>
+</div>
+
 <div id="workList"></div>
+
+
+
+
 
 <div id="overlay" onclick="closeSettings()"></div>
 

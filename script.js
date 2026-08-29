@@ -18,6 +18,9 @@ function checkForm() {
 
 
 // 追加
+
+
+
 async function addWork() {
 
 
@@ -66,7 +69,7 @@ async function addWork() {
             editId = null;
 
             document.getElementById("addButton").textContent = "追加";
-
+            document.getElementById("cancelButton").style.display = "none";
 
         }
 
@@ -83,11 +86,12 @@ async function addWork() {
 
             works.push({
 
-                id:docRef.id,
-                ...work
+    id:docRef.id,
+    ...work
 
-            });
+});
 
+sortWorksByDate();
 
             console.log(
                 "Firestore保存成功 ID:",
@@ -121,16 +125,6 @@ async function addWork() {
 
 }
 
-works.sort(function(a,b){
-
-    if(!a.date) return 1;
-    if(!b.date) return -1;
-
-    return new Date(b.date)-new Date(a.date);
-
-});
-
-displayWorks();
 
 
 // 表示
@@ -216,8 +210,11 @@ function displayWorks(list = works) {
 
     });
 
+    
 
 }
+
+
 
 
 
@@ -228,9 +225,7 @@ async function loadFirebaseWorks(){
         collection(db,"works")
     );
 
-
     works = [];
-
 
     snapshot.forEach(function(doc){
 
@@ -241,8 +236,15 @@ async function loadFirebaseWorks(){
 
     });
 
+    sortWorksByDate();
 
-    // 初期表示は必ず新しい順
+    displayWorks();
+
+}
+
+//起動時新しい順でソート
+function sortWorksByDate(){
+
     works.sort(function(a,b){
 
         if(!a.date && !b.date){
@@ -257,23 +259,14 @@ async function loadFirebaseWorks(){
             return -1;
         }
 
-
         return new Date(b.date) - new Date(a.date);
 
     });
 
-
-    console.log(
-        "Firestore読み込み完了",
-        works
-    );
-
-
-    displayWorks();
-
 }
 
-
+//追加時も
+sortWorksByDate();
 
 // 検索
 function searchWorks(){
@@ -415,11 +408,55 @@ function editWork(id){
 
     editId = id;
 
-document.getElementById("addButton").textContent = "更新";
+    document.getElementById("addButton").textContent = "更新";
 
+    document.getElementById("cancelButton").style.display = "inline-block";
+
+    checkForm();
+    document.querySelector(".section h2").textContent = "作品を編集";
 
 }
 
+//キャンセル
+function cancelEdit(){
+
+    editId = null;
+
+    document.getElementById("title").value = "";
+    document.getElementById("category").value = "";
+    document.getElementById("status").value = "";
+    document.getElementById("date").value = "";
+    document.getElementById("memo").value = "";
+
+    document.getElementById("addButton").textContent = "追加";
+
+    document.getElementById("cancelButton").style.display = "none";
+
+    checkForm();
+
+}
+window.cancelEdit = cancelEdit;
+
+//右下追加ボタン
+
+
+function toggleAddForm(){
+
+    const form = document.getElementById("addForm");
+
+    form.classList.toggle("open");
+
+}
+
+//検索ボタン
+function toggleSearchForm(){
+
+    const form = document.getElementById("searchForm");
+
+    form.classList.toggle("open");
+
+}
+ 
 
 
 // 削除
@@ -650,3 +687,5 @@ window.closeSettings = closeSettings;
 window.exportWorks = exportWorks;
 window.importWorks = importWorks;
 window.loadWorks = loadWorks;
+window.toggleAddForm = toggleAddForm;
+window.toggleSearchForm = toggleSearchForm;

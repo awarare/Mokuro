@@ -4,6 +4,7 @@ body {
     margin: 0;
     padding: 16px;
     background-color: #F5F6FA;
+    margin: 0 auto; 
 }
 
 h1 {
@@ -11,6 +12,11 @@ h1 {
     color: #1E3A5F;
 }
 
+h2 {
+    color: #1E3A5F;
+    margin:0 auto;
+    margin-bottom: 20px;
+}
 p {
     text-align: center;
     color: #1C1C1E;
@@ -405,4 +411,85 @@ input[type="date"] {
 }
 * {
     box-sizing: border-box;
+}
+/* ボタンを包む親要素 */
+.form-buttons {
+    display: flex !important;
+    flex-direction: row !important;
+    gap: 10px !important;
+    margin-top: 15px !important;
+    margin-bottom: 15px !important;
+    align-items: center !important;
+}
+
+/* 中のボタン2つを強制的に50%ずつ（均等）にする */
+.form-buttons button,
+.form-buttons #addButton,
+.form-buttons #cancelButton {
+    flex: 1 1 0% !important;      /* 均等に引き伸ばす設定 */
+    width: 50% !important;         /* 幅を半分ずつに固定 */
+    max-width: 50% !important;
+    margin: 0 !important;          /* 変な余白を消す */
+    padding: 12px 0 !important;    /* 上下余白だけ指定して横幅に影響させない */
+    height: 44px !important;       /* 高さを同じ44pxに完全固定 */
+    line-height: 20px !important;
+    box-sizing: border-box !important;
+}
+
+/* キャンセルボタンの色指定 */
+.form-buttons #cancelButton {
+    background-color: #E5E5EA !important;
+    color: #1C1C1E !important;
+}
+#fab {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+
+    width: 60px;
+    height: 60px;
+
+    border-radius: 50%;
+
+    font-size: 32px;
+
+    background-color: #1E3A5F;
+    color: white;
+
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+
+    z-index: 20;
+     display:flex;
+    align-items:center;
+    justify-content:center;
+
+    padding:0;
+    line-height:1;
+}
+#addForm,
+#searchForm {
+    max-height:0;
+    overflow:hidden;
+    opacity:0;
+    transition:.3s;
+    margin-top: 20px;
+}
+
+#addForm.open,
+#searchForm.open {
+    max-height:1000px;
+    opacity:1;
+}
+.list-header {
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+#searchButton {
+    width:44px;
+    height:44px;
+    border-radius:50%;
+    padding:0;
+    margin-bottom: 20px;
 }
