@@ -42,10 +42,15 @@ async function addWork() {
         if(editId){
 
             await updateDoc(
-                doc(db,"works",editId),
-                work
-            );
-
+    doc(
+        db,
+        "users",
+        auth.currentUser.uid,
+        "works",
+        editId
+    ),
+    work
+);
 
             works = works.map(function(item){
 
@@ -78,10 +83,10 @@ async function addWork() {
         else{
 
 
-            const docRef = await addDoc(
-                collection(db,"works"),
-                work
-            );
+           const docRef = await addDoc(
+    worksRef(),
+    work
+);
 
 
             works.push({
@@ -129,6 +134,7 @@ sortWorksByDate();
 
 // 表示
 function displayWorks(list = works) {
+    console.log("displayWorks", list);
 
 
     const workList =
@@ -222,7 +228,7 @@ function displayWorks(list = works) {
 async function loadFirebaseWorks(){
 
     const snapshot = await getDocs(
-        collection(db,"works")
+        worksRef()
     );
 
     works = [];
@@ -498,7 +504,13 @@ async function deleteWork(id){
     try{
 
         await deleteDoc(
-            doc(db,"works",id)
+            doc(
+    db,
+    "users",
+    auth.currentUser.uid,
+    "works",
+    id
+)
         );
 
 
@@ -647,31 +659,49 @@ function closeSettings(){
 
 }
 
+function worksRef(){
 
+    const user = auth.currentUser;
+
+    return collection(
+        db,
+        "users",
+        user.uid,
+        "works"
+    );
+
+}
 
 // Firebase
 
 import {
-initializeApp
+  initializeApp
 }
 from
 "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
 
-
 import {
-
-getFirestore,
-collection,
-addDoc,
-getDocs,
-deleteDoc,
-doc,
-updateDoc
+  getFirestore,
+  collection,
+  addDoc,
+  getDocs,
+  deleteDoc,
+  doc,
+  updateDoc,
+  setDoc
 }
 from
 "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
 
-
+import {
+  getAuth,
+  GoogleAuthProvider,
+  signInWithPopup,
+  signOut,
+  onAuthStateChanged
+}
+from
+"https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
 
 const firebaseConfig = {
 
@@ -689,7 +719,55 @@ appId:"1:130300522379:web:eb4362d67340f2a30c098e"
 
 };
 
+async function migrateWorks(){
 
+    const user = auth.currentUser;
+
+    if(!user){
+        alert("先にGoogleログインしてください");
+        return;
+    }
+
+    try{
+
+        // 旧データ取得
+        const snapshot = await getDocs(
+            collection(db, "works")
+        );
+
+        let count = 0;
+
+        for(const workDoc of snapshot.docs){
+
+            await setDoc(
+
+                doc(
+                    db,
+                    "users",
+                    user.uid,
+                    "works",
+                    workDoc.id
+                ),
+
+                workDoc.data()
+
+            );
+
+            count++;
+
+        }
+
+        alert(`${count}件コピーしました！`);
+
+        console.log("移行完了");
+
+    }catch(error){
+
+        console.error(error);
+
+    }
+
+}
 
 const app =
 initializeApp(firebaseConfig);
@@ -699,12 +777,48 @@ const db =
 getFirestore(app);
 
 
+const auth = getAuth(app);
+const provider = new GoogleAuthProvider();
+
+
+async function loginGoogle(){
+
+  await signInWithPopup(auth, provider);
+
+}
+
+async function logout(){
+
+  await signOut(auth);
+
+}
+
+onAuthStateChanged(auth, (user)=>{
+
+  if(user){
+
+    console.log("ログイン中", user.email);
+    console.log("UID:", user.uid);
+
+    loadFirebaseWorks();
+
+  }else{
+
+    console.log("未ログイン");
+
+  }
+
+});
+
+window.auth = auth;
+window.loginGoogle = loginGoogle;
+window.logout = logout;
 
 console.log("Firebase接続OK");
 
 
 
-loadFirebaseWorks();
+
 
 
 
@@ -721,6 +835,6 @@ window.importWorks = importWorks;
 window.loadWorks = loadWorks;
 window.toggleAddForm = toggleAddForm;
 window.toggleSearchForm = toggleSearchForm;
+window.migrateWorks = migrateWorks;
 
-lucide.createIcons();
 lucide.createIcons();

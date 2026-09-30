@@ -539,3 +539,9 @@ input[type="date"] {
     height:32px;
     stroke-width:2.5;
 }
+.account-area {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 1000;
+}
