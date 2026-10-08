@@ -21,11 +21,43 @@
 
 <header>
 
-    <h1>Mokuro</h1>
+<div id="accountArea">
 
-    <button id="settingButton" onclick="openSettings()">
-    <i data-lucide="settings"></i>
-</button>
+    <!-- 未ログイン時 -->
+    <button id="loginButton" onclick="loginGoogle()">
+        Googleでログイン
+    </button>
+
+
+    <!-- ログイン後（初期状態は display: none にしておく） -->
+    <div id="userArea" style="display: none;">
+
+        <button id="accountButton">
+            <img id="userPhoto" alt="ユーザーアイコン">
+        </button>
+
+        
+    </div>
+
+</div>
+
+
+
+
+<div id="userDropdown" class="dropdown hidden">
+    <div class="user-info">
+        <strong id="dropdownName"></strong>
+        <small id="dropdownEmail"></small>
+    </div>
+
+    <hr>
+
+    <button onclick="logout()">
+        ログアウト
+    </button>
+</div>
+
+<h1>Mokuro</h1>
 
 </header>
 
@@ -259,15 +291,7 @@
 
 
 
-<div class="account-area">
 
-  <button onclick="loginGoogle()" id="loginButton">
-    Googleでログイン
-  </button>
-
-  <span id="userInfo"></span>
-
-</div>
 
 
 

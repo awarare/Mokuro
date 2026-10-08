@@ -793,28 +793,71 @@ async function logout(){
 
 }
 
-onAuthStateChanged(auth, (user)=>{
+onAuthStateChanged(auth, (user) => {
+    const loginButton = document.getElementById("loginButton");
+    const userArea = document.getElementById("userArea");
 
-  if(user){
+    if (user) {
+        // ログイン時：ログインボタンを非表示、ユーザーエリアを表示
+        loginButton.style.display = "none";
+        userArea.style.display = "flex"; // または "block"
 
-    console.log("ログイン中", user.email);
-    console.log("UID:", user.uid);
+        
 
-    loadFirebaseWorks();
+        document.getElementById("dropdownName").textContent =
+            user.displayName || "ユーザー";
 
-  }else{
+        document.getElementById("dropdownEmail").textContent =
+            user.email || "";
 
-    console.log("未ログイン");
+        const img = document.getElementById("userPhoto");
+        img.src = user.photoURL || "";
+        img.hidden = false;
 
-  }
+        loadFirebaseWorks();
 
+    } else {
+        // 未ログイン時：ログインボタンを表示、ユーザーエリアを非表示
+        loginButton.style.display = "inline-block"; // または "block"
+        userArea.style.display = "none";
+
+        
+    }
 });
+
+
+
 
 window.auth = auth;
 window.loginGoogle = loginGoogle;
 window.logout = logout;
 
 console.log("Firebase接続OK");
+
+
+
+//メニュー開閉
+const accountButton = document.getElementById("accountButton");
+const dropdown = document.getElementById("userDropdown");
+
+accountButton.addEventListener("click", () => {
+    dropdown.classList.toggle("hidden");
+});
+//外を押したら閉じる
+const accountArea = document.getElementById("accountArea");
+
+document.addEventListener("click", (e) => {
+    if (
+        !accountArea.contains(e.target) &&
+        !dropdown.contains(e.target)
+    ) {
+        dropdown.classList.add("hidden");
+    }
+});
+
+
+
+
 
 
 

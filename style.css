@@ -109,10 +109,18 @@ button:disabled {
     text-align: center;
 }
 
-header {
+header{
+
     position: relative;
-    text-align: center;
-    color: #1E3A5F;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    min-height: 60px;
+
 }
 
 header h1 {
@@ -539,9 +547,105 @@ input[type="date"] {
     height:32px;
     stroke-width:2.5;
 }
-.account-area {
-    position: fixed;
-    top: 20px;
-    left: 20px;
-    z-index: 1000;
+
+
+#accountButton:hover{
+
+    background: rgba(255,255,255,.08);
+
+}
+#accountButton svg{
+
+    width: 26px;
+
+    height: 26px;
+
+}
+#accountArea{
+    position:absolute;
+    left:0;
+    top:50%;
+    transform:translateY(-50%);
+
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:4px;
+}
+
+#accountButton{
+    width:36px;
+    height:36px;
+    padding:0;
+    border:none;
+    background:transparent;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+#userPhoto{
+    width:36px;
+    height:36px;
+    border-radius:50%;
+    object-fit:cover;
+}
+
+#userName{
+    font-size:12px;
+    color:#1E3A5F;
+    white-space:nowrap;
+}
+.user-menu{
+    position:relative;
+}
+
+#userButton{
+    background:white;
+    border:1px solid #ccc;
+    border-radius:10px;
+    padding:8px 12px;
+    cursor:pointer;
+}
+
+.dropdown{
+    position:absolute;
+    right:0;
+    top:110%;
+    width:220px;
+
+    background:white;
+    border:1px solid #ddd;
+    border-radius:12px;
+
+    box-shadow:0 8px 20px rgba(0,0,0,.15);
+    padding:12px;
+    z-index:100;
+}
+
+.hidden{
+    display:none;
+}
+
+.user-info{
+    display:flex;
+    flex-direction:column;
+    gap:4px;
+}
+
+#logoutButton{
+    width:100%;
+    margin-top:10px;
+    padding:10px;
+
+    border:none;
+    border-radius:8px;
+
+    background:#f5f5f5;
+    cursor:pointer;
+}
+
+#logoutButton:hover{
+    background:#ececec;
 }
