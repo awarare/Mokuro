@@ -1,10 +1,23 @@
+/* ==========================================
+   Mokuro style.css（整理版）
+   ・!important は使わない
+   ・使われていないセレクタは削除
+   ・同じ要素の指定は1か所にまとめる
+   ========================================== */
+
+
+/* ---------- 基本 ---------- */
+
+* {
+    box-sizing: border-box;
+}
+
 body {
     font-family: sans-serif;
     max-width: 600px;
-    margin: 0;
+    margin: 0 auto;
     padding: 16px;
     background-color: #F5F6FA;
-    margin: 0 auto; 
 }
 
 h1 {
@@ -13,41 +26,353 @@ h1 {
 }
 
 h2 {
+    margin: 0 auto 20px;
     color: #1E3A5F;
-    margin:0 auto;
-    margin-bottom: 20px;
 }
+
 p {
     text-align: center;
     color: #1C1C1E;
 }
 
+body > p {
+    color: #4A5568;
+}
+
+label {
+    display: block;
+    margin: 12px 0 6px;
+    color: #1E3A5F;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+
+/* ---------- ボタン（共通） ---------- */
+
 button {
     display: block;
+    min-height: 44px;
     padding: 12px 24px;
-    font-size: 16px;
+    font-size: 15px;
     background-color: #1E3A5F;
     color: #F5F6FA;
     border: none;
     border-radius: 12px;
-    transition:.2s;
-}
-button:hover{
-    opacity:.9;
-}
-button:active{
-    transform:scale(.96);
+    transition: .2s;
 }
 
-.card {
+button:hover {
+    opacity: .9;
+}
+
+button:active {
+    transform: scale(.96);
+}
+
+button:disabled {
+    opacity: .5;
+    cursor: not-allowed;
+}
+
+
+/* ---------- 入力欄（共通） ---------- */
+
+input,
+textarea,
+select {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    padding: 12px;
+    margin-bottom: 12px;
+    font-size: 16px;
+    background: white;
+    border: 1px solid #E5E5EA;
+    border-radius: 12px;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(30, 58, 95, 0.2);
+}
+
+textarea {
+    height: 100px;
+}
+
+input[type="date"] {
+    height: 48px;
+}
+
+.date-wrapper {
+    width: 100%;
+    overflow: hidden;
+}
+
+/* JSON読み込み用のファイル入力（常に非表示） */
+#importFile {
+    display: none;
+}
+
+
+/* ---------- ヘッダー ---------- */
+
+header {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 60px;
+}
+
+header h1 {
+    margin: 0;
+}
+
+#accountArea {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+}
+
+#accountButton {
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    background: transparent;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+#loginButton {
+    min-height: 36px;
+    padding: 8px 12px;
+    font-size: 13px;
+    white-space: nowrap;
+}
+
+#userPhoto {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+#settingButton {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    background: transparent;
+    color: #1E3A5F;
+}
+
+.dropdown {
+    position: absolute;
+    right: 0;
+    top: 110%;
+    width: 220px;
+    padding: 12px;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, .15);
+    z-index: 100;
+}
+
+.hidden {
+    display: none;
+}
+
+.user-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+
+/* ---------- アイコンボタン ---------- */
+
+#settingButton,
+#searchButton {
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    border-radius: 50%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#settingButton svg,
+#searchButton svg {
+    width: 24px;
+    height: 24px;
+}
+
+#fab {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    width: 60px;
+    height: 60px;
+    padding: 0;
+    border-radius: 50%;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    z-index: 20;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#fab svg {
+    width: 32px;
+    height: 32px;
+    stroke-width: 2.5;
+}
+
+
+/* ---------- セクション（検索・追加フォーム） ---------- */
+
+.section {
+    padding: 20px;
+    margin-bottom: 24px;
     background: #FFFFFF;
     border-radius: 20px;
-    padding: 20px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+}
+
+.section h2 {
+    margin-top: 0;
+    margin-bottom: 18px;
+    font-size: 18px;
+}
+
+/* 開閉するフォーム */
+#addForm,
+#searchForm {
+    margin-top: 20px;
+    max-height: 1000px;
+    overflow: hidden;
+    transition: max-height .3s, opacity .3s, padding .3s, margin .3s;
+}
+
+/* 閉じている間は余白ごと畳む */
+#addForm:not(.open),
+#searchForm:not(.open) {
+    max-height: 0;
+    opacity: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+#searchForm {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.form-buttons {
+    display: flex;
+    gap: 10px;
+    margin: 15px 0;
+}
+
+.form-buttons button {
+    flex: 1;
+    height: 44px;
+    margin: 0;
+    padding: 12px 0;
+}
+
+#cancelButton {
+    background-color: #E5E5EA;
+    color: #1C1C1E;
+}
+
+
+/* ---------- 作品一覧 ---------- */
+
+.list-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#searchButton {
     margin-bottom: 20px;
+}
+
+#workList {
+    max-height: 60vh;
+    padding: 8px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    position: relative;
+    z-index: 1;
+}
+
+#workList::-webkit-scrollbar {
+    width: 10px;
+}
+
+#workList::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 5px;
+}
+
+#workList::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 5px;
+}
+
+#workList::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+.empty {
+    padding: 60px 20px;
+    text-align: center;
+    color: #8E8E93;
+}
+
+.empty-icon {
+    margin-bottom: 16px;
+    font-size: 48px;
+}
+
+
+/* ---------- 作品カード ---------- */
+
+.card {
+    margin-bottom: 20px;
+    padding: 20px;
+    background: #FFFFFF;
+    border: 1px solid #ECECEC;
+    border-radius: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
     transition: 0.2s;
     animation: fadeIn 0.4s ease;
-    border:1px solid #ECECEC;
+}
+
+.card:hover {
+    transform: translateY(-4px);
 }
 
 @keyframes fadeIn {
@@ -64,7 +389,6 @@ button:active{
 .card h2 {
     margin-top: 0;
     margin-bottom: 12px;
-    color: #1E3A5F;
     font-size: 22px;
     letter-spacing: 0.03em;
 }
@@ -74,87 +398,37 @@ button:active{
     font-size: 14px;
 }
 
-.form {
+.tags {
     display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-button:disabled {
-    background-color: #1E3A5F;
-    cursor: not-allowed;
-}
-
-#search {
-    display: block;
-    margin: 20px auto;
-}
-
-.card button {
-    display: inline-block;
-    margin: 10px 5px 0 5px ;
-    padding: 8px 16px;
-}
-
-#filterCategory {
-    margin-bottom: 10px;
-}
-
-#status {
-    margin-bottom: 10px;
-}
-
-.data-buttons {
-    margin-top: 20px;
-    text-align: center;
-}
-
-header{
-
-    position: relative;
-
-    display: flex;
-
-    justify-content: center;
-
     align-items: center;
-
-    min-height: 60px;
-
+    gap: 8px;
 }
 
-header h1 {
-    margin: 0;
+.category-tag {
+    display: inline-block;
+    margin-right: 6px;
+    padding: 4px 10px;
+    background: #E8EEF7;
     color: #1E3A5F;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 500;
 }
 
-#exportButton {
-    position: absolute;
-    right: 0;
-    top: 50%;
-    transform: translateY(-50%);
+.status-tag {
+    display: inline-block;
+    padding: 4px 12px;
+    background: #1E3A5F;
+    color: white;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 600;
 }
 
-#settingButton {
-    position:absolute;
-    right:0;
-    top:50%;
-    transform:translateY(-50%);
-
-    background:transparent;
-    color:#1E3A5F;
-
-    width:44px;
-    height:44px;
-    padding:0;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-}
-
-.card:hover {
-    transform: translateY(-4px);
+.memo {
+    margin-top: 16px;
+    padding-top: 12px;
+    border-top: 1px solid #E5E5EA;
 }
 
 .card-buttons {
@@ -165,487 +439,173 @@ header h1 {
     display: inline-block;
     margin: 10px 5px 0;
     padding: 8px 16px;
+    font-size: 14px;
 }
 
-/* 入力要素全般の共通基本設定 */
-input,
-textarea,
-select {
-    display: block;
-    width: 100%;
-    max-width: 100%;
-    box-sizing: border-box;
-    padding: 12px;
-    border-radius: 12px;
-    background: white;
-    border: 1px solid #E5E5EA;
-    font-size: 16px;
-    margin-bottom: 12px;
-
-}
-
-textarea {
-    height: 100px;
-}
-
-input:focus,
-textarea:focus,
-select:focus {
-    outline: none;
-    box-shadow: 0 0 0 3px rgba(30,58,95,0.2);
-}
-
-.tags {
-    display: flex;
-    gap: 8px;
-    align-items: center;
-}
-
-.category-tag {
-    display:inline-block;
-    background:#E8EEF7;
-    color:#1E3A5F;
-    padding:4px 10px;
-    border-radius:999px;
-    font-size:13px;
-    margin-right:6px;
-    font-weight:500;
-}
-
-.status-tag {
-    display:inline-block;
-    background:#1E3A5F;
-    color:white;
-    padding:4px 12px;
-    border-radius:999px;
-    font-size:13px;
-    font-weight:600;
-}
-
-.section {
-    background: #FFFFFF;
-    border-radius: 20px;
-    padding: 20px;
-    margin-bottom: 24px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-}
-
-.section h2 {
-    margin-top: 0;
-    margin-bottom: 18px;
+.card-buttons button:first-child {
+    background: #E8EEF7;
     color: #1E3A5F;
-    font-size: 18px;
 }
 
-label {
-    display:block;
-    margin:12px 0 6px;
-    color:#1E3A5F;
-    font-size:14px;
-    font-weight:600;
+.card-buttons button:last-child {
+    background: #FBEAEA;
+    color: #B42318;
 }
 
-#addButton {
-    padding: 16px;
-    margin: 20px auto;
-}
 
-body > p {
-    color: #4A5568;
-}
-
-.memo {
-    font-size: 16px;
-    margin-top: 16px;
-    padding-top: 12px;
-    border-top: 1px solid #E5E5EA;
-}
-
-.memo span {
-    font-size: 12px;
-    color: #8E8E93;
-}
-
-.memo p {
-    margin-top: 6px;
-}
-
-.settings {
-    display:none;
-    position:fixed;
-    top:50%;
-    left:50%;
-    transform:translate(-50%,-50%);
-    background:white;
-    padding:30px;
-    border-radius:20px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-    z-index:10;
-}
+/* ---------- 設定シート ---------- */
 
 #overlay {
-    display:none;
-    position:fixed;
+    display: none;
+    position: fixed;
     inset: 0;
-    top:0;
-    left:0;
-    width:100%;
-    height:100%;
-    background:rgba(0,0,0,.3);
+    background: rgba(0, 0, 0, .3);
+    z-index: 25;
 }
 
 #settingsSheet {
-    position:fixed;
-    left:0;
+    position: fixed;
+    left: 0;
     right: 0;
-    bottom:-400px;
+    bottom: -400px;
+    padding: 24px;
     background: white;
     border-radius: 24px 24px 0 0;
-    padding: 24px;
+    box-shadow: 0 -6px 20px rgba(0, 0, 0, .15);
     transition: bottom .3s ease;
-    box-shadow: 0 -6px 20px rgba(0,0,0,.15);
-    z-index:30;
+    z-index: 30;
+}
+#settingsSheet button:last-of-type {
+    margin-top: 20px;
+    background: #E5E5EA;
+    color: #1C1C1E;
 }
 
 #settingsSheet.open {
-    bottom:0;
+    bottom: 0;
 }
 
 #settingsSheet h2 {
-    text-align:center;
-    margin-bottom:20px;
+    margin-bottom: 20px;
+    text-align: center;
 }
 
 #settingsSheet button {
-    width:100%;
-    margin:10px 0;
+    width: 100%;
+    margin: 10px 0;
 }
 
 .sheet-handle {
     width: 48px;
     height: 5px;
+    margin: 0 auto 20px;
     background: #ccc;
     border-radius: 999px;
-    margin: 0 auto 20px;
 }
 
-.empty {
-    text-align:center;
-    color:#8E8E93;
-    padding:60px 20px;
+
+/* ---------- 削除確認ダイアログ ---------- */
+
+#deleteOverlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, .25);
+    z-index: 40;
 }
 
-.empty-icon {
-    font-size:48px;
-    margin-bottom:16px;
+#deleteDialog {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(.9);
+    width: calc(100% - 48px);
+    max-width: 340px;
+    padding: 24px;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, .12);
+    z-index: 50;
+
+    opacity: 0;
+    pointer-events: none;
+    transition: .2s;
 }
 
-.card-buttons button:first-child {
-    background:#E8EEF7;
-    color:#1E3A5F;
+#deleteDialog.open {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translate(-50%, -50%) scale(1);
 }
 
-.card-buttons button:last-child {
-    background:#FBEAEA;
-    color:#B42318;
+#deleteDialogTitle {
+    margin: 0 0 20px;
+    text-align: center;
+    color: #1E3A5F;
+    font-size: 16px;
+    word-break: break-all;
 }
+
+.dialog-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.dialog-buttons button {
+    flex: 1;
+    margin: 0;
+    padding: 12px 0;
+}
+
+#deleteCancelButton {
+    background: #E5E5EA;
+    color: #1C1C1E;
+}
+
+#deleteConfirmButton {
+    background: #B42318;
+    color: white;
+}
+
 
 /* ==========================================
-   スマホ・タブレット向けレスポンシブ設定 (768px以下)
+   スマホ・タブレット向け (768px以下)
+   ※ 通常の指定を上書きするので、必ず最後に置く
    ========================================== */
-@media screen and (max-width:768px){
+
+@media screen and (max-width: 768px) {
+
     body {
-        margin:10px auto;
-        padding:12px;
-        width:100%;
-        box-sizing:border-box;
+        margin: 10px auto;
+        padding: 12px;
     }
 
-
-
-
-    .card, .section {
-        width: 100% !important;
-        max-width: 100% !important;
-        margin-left: 0 !important;
-        margin-right: 0 !important;
-        padding: 16px !important;
-        overflow: hidden !important;
+    .card,
+    .section {
+        padding: 16px;
     }
 
-    /* iOSの日付フォーム（date）がはみ出るのを徹底的にガード */
-    input, select, textarea, input[type="date"] {
-        display: block !important;
-        width: 100% !important;
-        max-width: 100% !important;
-        min-width: 0 !important;
-        box-sizing: border-box !important;
-        font-size: 16px !important; /* Safariの自動ズーム防止 */
-        -webkit-appearance: none;   /* iOS特有のパーツデザインを無効化 */
+    .card {
+        overflow: hidden;
     }
 
-    button, .btn {
-        min-height: 44px !important;
-        font-size: 15px !important;
+    /* iOSのフォーム部品の見た目をそろえる */
+    input,
+    select,
+    textarea {
+        -webkit-appearance: none;
+        appearance: none;
     }
 
-    #addButton {
-        width: 100% !important;
+    input[type="date"] {
+        min-width: 0;
     }
 
-    .card-buttons button {
-        padding: 8px 16px !important;
-        font-size: 14px !important;
-    }
 }
-
-input[type="date"] {
+.empty-icon svg {
+    display: block;
+    width: 48px;
     height: 48px;
-    padding-top: 12px;
-    padding-bottom: 12px;
-}
-.date-wrapper{
-    width:100%;
-    overflow:hidden;
-}
-
-.date-wrapper input[type="date"]{
-    width:100%;
-    display:block;
-    box-sizing:border-box;
-}
-.section {
-    overflow: hidden !important;
-}
-
-#date {
-    display: block !important;
-    width: 100% !important;
-    max-width: 100% !important;
-    box-sizing: border-box !important;
-}
-* {
-    box-sizing: border-box;
-}
-/* ボタンを包む親要素 */
-.form-buttons {
-    display: flex !important;
-    flex-direction: row !important;
-    gap: 10px !important;
-    margin-top: 15px !important;
-    margin-bottom: 15px !important;
-    align-items: center !important;
-}
-
-/* 中のボタン2つを強制的に50%ずつ（均等）にする */
-.form-buttons button,
-.form-buttons #addButton,
-.form-buttons #cancelButton {
-    flex: 1 1 0% !important;      /* 均等に引き伸ばす設定 */
-    width: 50% !important;         /* 幅を半分ずつに固定 */
-    max-width: 50% !important;
-    margin: 0 !important;          /* 変な余白を消す */
-    padding: 12px 0 !important;    /* 上下余白だけ指定して横幅に影響させない */
-    height: 44px !important;       /* 高さを同じ44pxに完全固定 */
-    line-height: 20px !important;
-    box-sizing: border-box !important;
-}
-
-/* キャンセルボタンの色指定 */
-.form-buttons #cancelButton {
-    background-color: #E5E5EA !important;
-    color: #1C1C1E !important;
-}
-#fab {
-    position: fixed;
-    right: 20px;
-    bottom: 20px;
-
-    width: 60px;
-    height: 60px;
-
-    border-radius: 50%;
-
-    font-size: 32px;
-
-    background-color: #1E3A5F;
-    color: white;
-
-    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-
-    z-index: 20;
-     display:flex;
-    align-items:center;
-    justify-content:center;
-
-    padding:0;
-    line-height:1;
-}
-#addForm,
-#searchForm {
-    max-height:0;
-    overflow:hidden;
-    opacity:0;
-    transition:.3s;
-    margin-top: 20px;
-}
-
-#addForm.open,
-#searchForm.open {
-    max-height:1000px;
-    opacity:1;
-}
-.list-header {
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-}
-
-#searchButton {
-    width:44px;
-    height:44px;
-    border-radius:50%;
-    padding:0;
-    margin-bottom: 20px;
-}
-#executeSearchButton {
-    width:44px !important;
-    height:44px !important;
-    padding:0 !important;
-    margin:12px auto !important;
-
-    display:flex !important;
-    align-items:center;
-    justify-content:center;
-}
-#searchForm {
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-}
-#settingButton,
-#searchButton,
-#executeSearchButton {
-    width:44px;
-    height:44px;
-    padding:0;
-    border-radius:50%;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-}
-
-#settingButton svg,
-#searchButton svg,
-#executeSearchButton svg {
-    width:24px;
-    height:24px;
-}
-#fab svg {
-    width:32px;
-    height:32px;
-    stroke-width:2.5;
-}
-
-
-#accountButton:hover{
-
-    background: rgba(255,255,255,.08);
-
-}
-#accountButton svg{
-
-    width: 26px;
-
-    height: 26px;
-
-}
-#accountArea{
-    position:absolute;
-    left:0;
-    top:50%;
-    transform:translateY(-50%);
-
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    gap:4px;
-}
-
-#accountButton{
-    width:36px;
-    height:36px;
-    padding:0;
-    border:none;
-    background:transparent;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-}
-
-#userPhoto{
-    width:36px;
-    height:36px;
-    border-radius:50%;
-    object-fit:cover;
-}
-
-#userName{
-    font-size:12px;
-    color:#1E3A5F;
-    white-space:nowrap;
-}
-.user-menu{
-    position:relative;
-}
-
-#userButton{
-    background:white;
-    border:1px solid #ccc;
-    border-radius:10px;
-    padding:8px 12px;
-    cursor:pointer;
-}
-
-.dropdown{
-    position:absolute;
-    right:0;
-    top:110%;
-    width:220px;
-
-    background:white;
-    border:1px solid #ddd;
-    border-radius:12px;
-
-    box-shadow:0 8px 20px rgba(0,0,0,.15);
-    padding:12px;
-    z-index:100;
-}
-
-.hidden{
-    display:none;
-}
-
-.user-info{
-    display:flex;
-    flex-direction:column;
-    gap:4px;
-}
-
-#logoutButton{
-    width:100%;
-    margin-top:10px;
-    padding:10px;
-
-    border:none;
-    border-radius:8px;
-
-    background:#f5f5f5;
-    cursor:pointer;
-}
-
-#logoutButton:hover{
-    background:#ececec;
+    margin: 0 auto;
+    stroke-width: 1.5;
 }
